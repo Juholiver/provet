@@ -54,7 +54,7 @@ export default function Home() {
         {/* Footer do Card */}
         <div className="mt-8 text-center text-sm text-slate-600">
           Ainda não tem acesso?{' '}
-          <a href="#" className="font-bold text-sky-600 hover:text-sky-700 hover:underline">
+          <a href="/cadastro" className="font-bold text-sky-600 hover:text-sky-700 hover:underline">
             Criar conta gratuita
           </a>
         </div>
