@@ -1,6 +1,32 @@
-import Image from 'next/image';
+"use client"
+
+import { useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+ 
 
 export default function Cadastro() {
+  
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  
+  const supabase = createClient()
+
+  async function handleCadastro(e: React.FormEvent) {
+    e.preventDefault()
+
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password
+    })
+
+    if (error) {
+      alert("Erro: " + error.message)
+    } else {
+      alert("Usuário criado com sucesso!")
+    }
+  }
+
+
   return (
     /* Fundo com o mesmo Gradiente: Branco para Azul Médio */
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-white via-blue-100 to-blue-300 p-4">
@@ -31,8 +57,9 @@ export default function Cadastro() {
             <label className="text-xs font-bold text-blue-900/70 ml-2 mb-1 block">Nome</label>
             <input
               type="text"
-              placeholder="Como podemos te chamar?"
+              placeholder="Nome"
               className="w-full rounded-2xl border-2 border-transparent bg-blue-50/50 px-5 py-4 text-blue-900 transition-all placeholder:text-blue-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
+              onChange={(e)=> setEmail(e.target.value)}
             />
           </div>
 
@@ -42,6 +69,7 @@ export default function Cadastro() {
               type="email"
               placeholder="seu@email.com"
               className="w-full rounded-2xl border-2 border-transparent bg-blue-50/50 px-5 py-4 text-blue-900 transition-all placeholder:text-blue-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
+              onChange={(e)=> setEmail(e.target.value)}
             />
           </div>
 
@@ -51,6 +79,7 @@ export default function Cadastro() {
               type="password"
               placeholder="••••••••"
               className="w-full rounded-2xl border-2 border-transparent bg-blue-50/50 px-5 py-4 text-blue-900 transition-all placeholder:text-blue-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
+              onChange={(e)=> setPassword(e.target.value)}
             />
           </div>
 
@@ -58,6 +87,7 @@ export default function Cadastro() {
             <button
               type="submit"
               className="w-full rounded-2xl bg-blue-600 py-4 text-sm font-black text-white shadow-xl shadow-blue-200 transition-all hover:bg-blue-700 hover:-translate-y-1 active:scale-95 active:translate-y-0"
+              onClick={handleCadastro}
             >
               CRIAR MINHA CONTA
             </button>

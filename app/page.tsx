@@ -1,4 +1,34 @@
+'use client';
+
+import { useState } from "react"
+import { createClient } from "@/lib/supabase/client"
+
+
+
 export default function Home() {
+
+  const [email,setEmail] = useState("")
+  const [password,setPassword] = useState("")
+
+  const supabase = createClient()
+
+  async function handleLogin(e: React.FormEvent) {
+
+    e.preventDefault()
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if(error){
+      alert(error.message)
+    } else{
+      alert("Login realizado!")
+    }
+
+  }
+
   return (
     /* Fundo com Gradiente mais presente: Branco para um Azul Médio Suave */
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-white via-blue-100 to-blue-300 p-4">
@@ -31,6 +61,7 @@ export default function Home() {
               type="text"
               placeholder="exemplo@provet.com"
               className="w-full rounded-2xl border-2 border-transparent bg-blue-50/50 px-5 py-4 text-blue-900 transition-all placeholder:text-blue-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
+              onChange={(e)=> setEmail(e.target.value)}
             />
           </div>
 
@@ -43,12 +74,14 @@ export default function Home() {
               type="password"
               placeholder="••••••••"
               className="w-full rounded-2xl border-2 border-transparent bg-blue-50/50 px-5 py-4 text-blue-900 transition-all placeholder:text-blue-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100"
+              onChange={(e)=> setPassword(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
             className="mt-4 w-full rounded-2xl bg-blue-600 py-4 text-sm font-black text-white shadow-xl shadow-blue-200 transition-all hover:bg-blue-700 hover:-translate-y-1 active:scale-95 active:translate-y-0"
+            onClick={handleLogin}
           >
             Login
           </button>
