@@ -7,6 +7,7 @@ import {
   LayoutDashboard, PawPrint, CalendarDays, Users, 
   LogOut, Settings, ChevronLeft, ChevronRight 
 } from 'lucide-react';
+import { handleLogout } from './handleLogout';
 
 export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -49,8 +50,8 @@ export default function Sidebar() {
       <div className="mt-auto pt-6 border-t border-slate-700/50 space-y-2">
         <SidebarItem icon={<Settings size={20} />} label="Configurações" href="/configuracoes" isExpanded={isExpanded} active={pathname === '/configuracoes'} />
         
-        <button className={`w-full flex items-center ${isExpanded ? 'gap-4 px-4' : 'justify-center'} py-4 rounded-2xl font-bold text-red-400 hover:bg-red-500/10 transition-all group`}>
-          <LogOut size={20} className="shrink-0 group-hover:translate-x-1 transition-transform" />
+        <button onClick={handleLogout} className={`w-full flex items-center ${isExpanded ? 'gap-4 px-4' : 'justify-center'} py-4 rounded-2xl font-bold text-red-400 hover:bg-red-500/10 transition-all group`}>
+          <LogOut size={20} className="shrink-0 group-hover:translate-x-1 transition-transform"  />
           {isExpanded && <span className="text-sm whitespace-nowrap">Sair</span>}
         </button>
       </div>
