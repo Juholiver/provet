@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { createClient } from "@/lib/supabase/client"
+  import { useRouter } from 'next/navigation';
 
 
 
@@ -11,6 +12,7 @@ export default function Home() {
   const [password,setPassword] = useState("")
 
   const supabase = createClient()
+  const router = useRouter();
 
   async function handleLogin(e: React.FormEvent) {
 
@@ -24,7 +26,7 @@ export default function Home() {
     if(error){
       alert(error.message)
     } else{
-      alert("Login realizado!")
+      router.push('/dashboard');
     }
 
   }
