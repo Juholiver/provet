@@ -93,7 +93,7 @@ export default function Clientes() {
 
                 <tbody className="divide-y divide-slate-100">
                   {loading ? (
-                    <tr><td colSpan="4" className="text-center py-10 text-slate-400">Carregando...</td></tr>
+                    <tr><td colSpan={4} className="text-center py-10 text-slate-400">Carregando...</td></tr>
                   ) : filteredClientes.map((pet) => (
                     <tr key={pet.id} className="hover:bg-slate-50/50 transition-colors group">
                       <td className="px-6 py-4">
