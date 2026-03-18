@@ -103,7 +103,13 @@ export default function ListaPets() {
                   <span>{pet.raca || pet.tipo} • {pet.idade} anos</span>
                 </div>
                 <p className="text-slate-600 text-sm line-clamp-3">
-                  {pet.observacoes || "Nenhuma observação registrada."}
+                  <span className="font-semibold text-blue-500">Tutor:</span> {pet.dono || "Não registrado"}
+                </p>
+                <p className="text-slate-600 text-sm line-clamp-3">
+                  <span className="font-semibold text-blue-500">Contato:</span> {pet.telefone || "Não registrado"}
+                </p>
+                <p className="text-slate-600 text-sm line-clamp-3">
+                  <span className="font-semibold text-blue-500">Observações:</span> {pet.observacoes || "Nenhuma"}
                 </p>
               </div>
               
