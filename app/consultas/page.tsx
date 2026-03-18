@@ -220,7 +220,7 @@ export default function Consultas() {
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Paciente</label>
                 <select 
                   required value={form.pet_id}
-                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none"
+                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none text-blue-600"
                   onChange={(e) => setForm({...form, pet_id: e.target.value})}
                 >
                   <option value="">Selecione um pet cadastrado...</option>
@@ -232,10 +232,10 @@ export default function Consultas() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Data</label>
+                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ">Data</label>
                   <input 
                     type="date" required value={form.data}
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-blue-600"
                     onChange={(e) => setForm({...form, data: e.target.value})}
                   />
                 </div>
@@ -243,7 +243,7 @@ export default function Consultas() {
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Horário</label>
                   <input 
                     type="time" required value={form.horario}
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none"
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-blue-600"
                     onChange={(e) => setForm({...form, horario: e.target.value})}
                   />
                 </div>
@@ -253,7 +253,7 @@ export default function Consultas() {
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Veterinário Responsável</label>
                 <input 
                   type="text" required value={form.veterinario} placeholder="Nome do médico veterinário"
-                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none text-blue-600"
                   onChange={(e) => setForm({...form, veterinario: e.target.value})}
                 />
               </div>
@@ -266,7 +266,7 @@ export default function Consultas() {
                       key={status} type="button"
                       onClick={() => setForm({...form, status})}
                       className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-                        form.status === status ? "bg-blue-600 text-white shadow-lg shadow-blue-200" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                        form.status === status ? "bg-blue-600 text-white shadow-lg shadow-blue-200" : "bg-slate-100 text-slate-500 hover:bg-slate-200 text-blue-600"
                       }`}
                     >
                       {status}
