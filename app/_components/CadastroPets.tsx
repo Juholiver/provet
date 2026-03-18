@@ -15,45 +15,46 @@ export default function CadastroPets() {
   const [observacoes, setObservacoes] = useState("")
 
   async function handleCadastro(e: React.FormEvent) {
-  e.preventDefault()
+    e.preventDefault()
 
-  // pegar usuário logado
-  const { data: userData } = await supabase.auth.getUser()
-  const user = userData.user
+    // 1. Pegar usuário logado
+    const { data: userData } = await supabase.auth.getUser()
+    const user = userData.user
 
-  if (!user) {
-    alert("Você precisa estar logado para cadastrar um pet!")
-    return
-  }
-
-  // inserir no Supabase
-  const { error } = await supabase.from("pets").insert([
-    {
-      nome,
-      tipo,
-      idade: idade ? parseInt(idade) : null,
-      peso,
-      dono,
-      telefone,
-      observacoes,
-      user_id: user.id
+    if (!user) {
+      alert("Você precisa estar logado para cadastrar um pet!")
+      return
     }
-  ])
 
-  if (error) {
-    alert("Erro ao cadastrar pet: " + error.message)
-  } else {
-    alert("Pet cadastrado com sucesso! 🐾")
-    // limpar formulário
-    setNome("")
-    setTipo("")
-    setIdade("")
-    setPeso("")
-    setDono("")
-    setTelefone("")
-    setObservacoes("")
+    // 2. Inserir no Supabase
+    const { error } = await supabase.from("pets").insert([
+      {
+        nome,
+        tipo,
+        idade: idade ? parseInt(idade) : null,
+        peso: peso.replace(',', '.'), // AJUSTE: Converte vírgula em ponto antes de salvar
+        dono,
+        telefone,
+        observacoes,
+        user_id: user.id
+      }
+    ])
+
+    if (error) {
+      alert("Erro ao cadastrar pet: " + error.message)
+    } else {
+      alert("Pet cadastrado com sucesso! 🐾")
+      
+      // 3. Limpar formulário (Corrigido: Tipo volta para o padrão 'Cachorro')
+      setNome("")
+      setTipo("Cachorro") 
+      setIdade("")
+      setPeso("")
+      setDono("")
+      setTelefone("")
+      setObservacoes("")
+    }
   }
-}
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-white via-blue-50 to-blue-200 p-4 md:p-8">
@@ -75,13 +76,15 @@ export default function CadastroPets() {
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-blue-900 ml-1">Dono</label>
             <input
+              required
               value={dono}
               onChange={e => setDono(e.target.value)} 
               type="text" 
               placeholder="Nome do dono"
-              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800 outline-none"
             />
           </div>
+
           {/* Telefone */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-blue-900 ml-1">Telefone</label>
@@ -90,7 +93,7 @@ export default function CadastroPets() {
               onChange={e => setTelefone(e.target.value)} 
               type="text" 
               placeholder="(XX) XXXXX-XXXX"
-              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800 outline-none"
             />
           </div>
           
@@ -98,6 +101,7 @@ export default function CadastroPets() {
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-blue-900 ml-1">Nome do Pet</label>
             <input 
+              required
               type="text" 
               placeholder="Ex: Totó"
               onChange={e => setNome(e.target.value)}
@@ -110,11 +114,11 @@ export default function CadastroPets() {
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-blue-900 ml-1">Espécie</label>
             <select className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 outline-none text-blue-800" onChange={e => setTipo(e.target.value)} value={tipo}>
-              <option>Cachorro</option>
-              <option>Gato</option>
-              <option>Coelho</option>
-              <option>Hamster</option>
-              <option>Outro</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+              <option value="Coelho">Coelho</option>
+              <option value="Hamster">Hamster</option>
+              <option value="Outro">Outro</option>
             </select>
           </div>
 
@@ -125,7 +129,7 @@ export default function CadastroPets() {
               value={idade}
               onChange={e => setIdade(e.target.value)} 
               type="number" 
-              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800 outline-none"
             />
           </div>
 
@@ -134,14 +138,19 @@ export default function CadastroPets() {
             <label className="text-sm font-semibold text-blue-900 ml-1">Peso (kg)</label>
             <input
               value={peso}
-              onChange={e => setPeso(e.target.value)} 
+              onChange={e => {
+                // Permite apenas números, ponto e vírgula
+                const val = e.target.value.replace(/[^0-9.,]/g, '');
+                setPeso(val);
+              }} 
               type="text" 
+              inputMode="decimal"
               placeholder="0.0"
-              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800 outline-none"
             />
           </div>
 
-          {/* Observações - Ocupa as duas colunas no desktop */}
+          {/* Observações */}
           <div className="flex flex-col gap-2 md:col-span-2">
             <label className="text-sm font-semibold text-blue-900 ml-1">Observações Médicas</label>
             <textarea 
@@ -149,7 +158,7 @@ export default function CadastroPets() {
               value={observacoes}
               onChange={e => setObservacoes(e.target.value)}
               placeholder="Alergias, vacinas pendentes..."
-              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800 outline-none"
             ></textarea>
           </div>
 
