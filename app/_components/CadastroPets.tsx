@@ -10,6 +10,8 @@ export default function CadastroPets() {
   const [tipo, setTipo] = useState("Cachorro")
   const [idade, setIdade] = useState("")
   const [peso, setPeso] = useState("")
+  const [dono, setDono] = useState("")
+  const [telefone, setTelefone] = useState("")
   const [observacoes, setObservacoes] = useState("")
 
   async function handleCadastro(e: React.FormEvent) {
@@ -31,6 +33,8 @@ export default function CadastroPets() {
       tipo,
       idade: idade ? parseInt(idade) : null,
       peso,
+      dono,
+      telefone,
       observacoes,
       user_id: user.id
     }
@@ -45,6 +49,8 @@ export default function CadastroPets() {
     setTipo("")
     setIdade("")
     setPeso("")
+    setDono("")
+    setTelefone("")
     setObservacoes("")
   }
 }
@@ -64,6 +70,29 @@ export default function CadastroPets() {
 
         {/* Formulário Grid */}
         <form onSubmit={handleCadastro} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          {/* Dono */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-blue-900 ml-1">Dono</label>
+            <input
+              value={dono}
+              onChange={e => setDono(e.target.value)} 
+              type="text" 
+              placeholder="Nome do dono"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+            />
+          </div>
+          {/* Telefone */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-blue-900 ml-1">Telefone</label>
+            <input
+              value={telefone}
+              onChange={e => setTelefone(e.target.value)} 
+              type="text" 
+              placeholder="(XX) XXXXX-XXXX"
+              className="w-full px-4 py-3 rounded-2xl border border-blue-100 focus:ring-2 focus:ring-blue-400 bg-white/50 text-blue-800"
+            />
+          </div>
           
           {/* Nome do Pet */}
           <div className="flex flex-col gap-2">
