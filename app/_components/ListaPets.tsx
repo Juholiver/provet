@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { Search, Plus, Filter, MoreVertical, Heart, PawPrint, Trash2 } from 'lucide-react';
+import { Search, Plus, Filter, MoreVertical, Heart, PawPrint, Trash2, Scale } from 'lucide-react';
 
 export default function ListaPets() {
   const [pets, setPets] = useState<any[]>([])
@@ -12,7 +12,6 @@ export default function ListaPets() {
 
   const supabase = createClient()
 
-  // 1. Carregar pets ao montar o componente
   useEffect(() => {
     async function carregarPets() {
       setLoading(true)
@@ -30,7 +29,6 @@ export default function ListaPets() {
     carregarPets()
   }, [])
 
-  // 2. Função para Excluir Pet
   async function excluirPet(id: string) {
     const confirmacao = window.confirm("Tem certeza que deseja excluir este pet?");
     
@@ -43,13 +41,11 @@ export default function ListaPets() {
       if (error) {
         alert("Erro ao excluir pet: " + error.message);
       } else {
-        // Atualiza o estado local removendo o pet deletado
         setPets(pets.filter(pet => pet.id !== id));
       }
     }
   }
 
-  // 3. Lógica de Filtros
   const petsFiltrados = pets.filter((pet) => {
     const coincideNome = pet.nome?.toLowerCase().includes(termoBusca.toLowerCase());
     const coincideEspecie = filtroEspecie === "Todos" || pet.tipo === filtroEspecie;
@@ -60,7 +56,6 @@ export default function ListaPets() {
 
   return (
     <div className="w-full min-h-screen bg-slate-50/50 p-4 md:p-10">
-      
       <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Barra de Ações Superior */}
@@ -108,7 +103,6 @@ export default function ListaPets() {
                   </div>
                   
                   <div className="flex gap-2">
-                    {/* Botão de Excluir */}
                     <button 
                       onClick={() => excluirPet(pet.id)}
                       className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-all"
@@ -116,7 +110,6 @@ export default function ListaPets() {
                     >
                       <Trash2 size={20} />
                     </button>
-                    
                     <button className="p-2 text-slate-300 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-all">
                       <MoreVertical size={20} />
                     </button>
@@ -135,6 +128,10 @@ export default function ListaPets() {
                   <div className="space-y-2">
                     <p className="text-slate-600 text-sm">
                       <span className="font-semibold text-blue-500">Tutor:</span> {pet.dono || "Não registrado"}
+                    </p>
+                    {/* Exibição do Peso corrigida */}
+                    <p className="text-slate-600 text-sm flex items-center gap-1">
+                      <span className="font-semibold text-blue-500">Peso:</span> {pet.peso ? `${pet.peso} kg` : "Não informado"}
                     </p>
                     <p className="text-slate-600 text-sm">
                       <span className="font-semibold text-blue-500">Contato:</span> {pet.telefone || "Não registrado"}
