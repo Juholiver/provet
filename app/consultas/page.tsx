@@ -10,8 +10,8 @@ export default function Consultas() {
   const supabase = createClient()
   
   // Estados de Dados
-  const [consultas, setConsultas] = useState([])
-  const [listaPets, setListaPets] = useState([])
+  const [consultas, setConsultas] = useState<any[]>([])
+  const [listaPets, setListaPets] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   
   // Estados do Modal
