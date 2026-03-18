@@ -31,6 +31,17 @@ export default function Home() {
 
   }
 
+  async function handleGoogleLogin() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/auth/callback`,
+    },
+  })
+
+  if (error) alert(error.message)
+}
+
   return (
     /* Fundo com Gradiente mais presente: Branco para um Azul Médio Suave */
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-white via-blue-100 to-blue-300 p-4">
@@ -88,6 +99,15 @@ export default function Home() {
             Login
           </button>
         </form>
+        {/* Botão Google */}
+          <button 
+            type="button"
+            onClick={handleGoogleLogin}
+            className="mt-2 flex w-full items-center justify-center gap-3 rounded-2xl border-2 border-blue-100 bg-white py-4 text-sm font-bold text-blue-900 transition-all hover:bg-blue-50 hover:translate-y-2 active:scale-95"
+          >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="h-5 w-5" alt="Google" />
+            Entrar com Google
+          </button>
 
         {/* Footer */}
         <div className="mt-10 text-center text-sm font-bold text-blue-900/50">
