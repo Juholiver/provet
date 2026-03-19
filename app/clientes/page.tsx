@@ -44,14 +44,12 @@ export default function Clientes() {
   )
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 font-sans flex-col md:flex-row">
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="w-full px-4 md:px-8 pt-6">
-          <div className="max-w-7xl mx-auto">
-            <Header />
-          </div>
-        </header>
+
+        <div className="h-24 md:hidden" /> {/* Espaço para o botão do menu mobile */}
+        
 
         <main className="flex-1 p-4 md:p-8 lg:p-12 overflow-y-auto">
           <div className="max-w-7xl mx-auto space-y-6">
