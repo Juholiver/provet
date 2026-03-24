@@ -106,9 +106,9 @@ useEffect(() => {
               />
             </div>
 
-            {/* O restante do seu gráfico e atividades... */}
+           
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-               {/* Mantenha o código original do gráfico e atividades aqui */}
+               
             </div>
 
           </div>

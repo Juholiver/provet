@@ -20,7 +20,7 @@ export default function Clientes() {
 
   useEffect(() => {
     async function fetchPets() {
-      // ERRO 1 CORRIGIDO: Removido o await de createClient()
+      
       const supabase = createClient() 
       
       const { data, error } = await supabase
